@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 
 interface IUserData {
   name: string;
@@ -7,6 +13,7 @@ interface IUserData {
 }
 
 const App: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [users, setUsers] = useState<IUserData[]>([]);
 
   async function loadData() {
@@ -23,14 +30,16 @@ const App: React.FC = () => {
 
   const greeting = useCallback((name: string) => alert(`Hello ${name}`), []);
 
+  const focusOnInput = () => inputRef.current?.focus();
+
   useEffect(() => {
     loadData();
   }, []);
 
   return (
-    <div>
-      <strong>{users?.map((user) => user.name)}</strong>
-    </div>
+    <form action="">
+      <input ref={inputRef} type="email" name="email" id="email" />
+    </form>
   );
 };
 
